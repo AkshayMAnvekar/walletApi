@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const joi = require('joi');
+const joi = require("joi");
 
 /**
  * Generate a validation schema using joi to check the type of your environment variables
@@ -12,9 +12,9 @@ const envSchema = joi
     DB_PASSWORD: joi
       .string()
       .optional()
-      .empty(''),
+      .empty(""),
     DB_DATABASE: joi.string(),
-    DB_PORT: joi.number(),
+    DB_PORT: joi.number()
   })
   .unknown()
   .required();
@@ -29,12 +29,18 @@ if (error) {
 
 const config = {
   databaseConfig: {
-    user: envVars.DB_USER,
-    host: envVars.DB_HOST,
-    password: envVars.DB_PASSWORD,
-    database: envVars.DB_DATABASE,
-    port: envVars.DB_PORT,
-  },
+    client: "pg",
+    connection: {
+      host: envVars.DB_HOST,
+      port: envVars.DB_PORT,
+      user: envVars.DB_USER,
+      password: envVars.DB_PASSWORD,
+      database: envVars.DB_DATABASE
+    }
+    // migrations: {
+    //   directory: './migrations',
+    // },
+  }
 };
 
 module.exports = config;
